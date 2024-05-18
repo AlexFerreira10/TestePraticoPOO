@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class Vendedor extends Funcionario{
 
-    private static final double SALARIO_FIXO = 12000.00;
-    private static final double SALARIO_VARIAVEL = 1000.00;
-    private static final double BONIFICACAO = 0.2;
+    protected static final double SALARIO_FIXO = 12000.00;
+    protected static final double SALARIO_VARIAVEL = 1000.00;
+    protected static final double BONIFICACAO = 0.3;
 
     protected Map<LocalDate,Double> relatorioVendasPorMes = new HashMap<>();
 
@@ -30,6 +30,12 @@ public class Vendedor extends Funcionario{
         }
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
         double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
-        return salarioBase + relatorioVendasPorMes.get(dataSalario) * BONIFICACAO;
+
+        // Caso nao tenha o mes de vdendas registrado, consideramos 0
+        return salarioBase + calculadorBonificacao(dataSalario);
+    }
+
+    public double calculadorBonificacao(LocalDate dataSalario) {
+        return BONIFICACAO * relatorioVendasPorMes.getOrDefault(dataSalario, 0.0);
     }
 }

@@ -3,7 +3,8 @@ package applications;
 import entities.*;
 import exceptions.FalhaEntradaDados;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -17,6 +18,13 @@ public class Main {
 
         do {
             try {
+                // Lista dos funcionarios que recebem bonificacoes
+                List<Funcionario> lista = new ArrayList<>(empresa.getQuadroFuncionarios().stream().filter(funcionario -> funcionario instanceof Vendedor || funcionario instanceof Secretario)
+                        .toList());
+                // Lista dos Vendedores
+                List<Funcionario> listaVendedores = new ArrayList<>(empresa.getQuadroFuncionarios().stream()
+                        .filter(funcionario -> funcionario instanceof Vendedor).toList());
+
                 Main.menu();
                 opcao = Integer.parseInt(sc.next());
 
@@ -30,22 +38,44 @@ public class Main {
                         System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
                         String mes = sc.next();
                         double valorTotal = Funcionario.folhaPagamentoTotal(empresa.getQuadroFuncionarios(), mes, ano);
-                        System.out.println("Folha de Pagamento Total: R$" + String.format("%.2f", valorTotal));
+                        System.out.println("Folha de Pagamento Mensal (Salário + Benefício) dos Funcionários: R$" + String.format("%.2f", valorTotal));
                         break;
                     case 2:
-                        //Funcao
+                        System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
+                        ano = sc.next();
+                        System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
+                        mes = sc.next();
+                        valorTotal = Funcionario.folhaPagamentoSalario(empresa.getQuadroFuncionarios(), mes, ano);
+                        System.out.println("Folha de Pagamento Mensal (Somente salário) dos Funcionários: R$" + String.format("%.2f", valorTotal));
                         break;
                     case 3:
-                        //Funcao
+                        System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
+                        ano = sc.next();
+                        System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
+                        mes = sc.next();
+                        valorTotal = Funcionario.folhaPagamentoBonificacao(lista, mes, ano);
+                        System.out.println("Folha de Pagamento Mensal (Bonificação) dos Funcionários: R$" + String.format("%.2f", valorTotal));
                         break;
                     case 4:
-                        //Funcao
+                        System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
+                        ano = sc.next();
+                        System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
+                        mes = sc.next();
+                        System.out.println("Maior Salário Total do Mês:" + Funcionario.maiorPagamentoTotal(empresa.getQuadroFuncionarios(), mes, ano));
                         break;
                     case 5:
-                        //Funcao
+                        System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
+                        ano = sc.next();
+                        System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
+                        mes = sc.next();
+                        System.out.println("Maior Bonificação do Mês: " + Funcionario.maiorPagamentoBonificao(lista, mes, ano));
                         break;
                     case 6:
-                        //Funcao
+                        System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
+                        ano = sc.next();
+                        System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
+                        mes = sc.next();
+                        System.out.println("Maior Vendedor do Mês: " + Funcionario.maiorVendedor(listaVendedores, mes, ano));
                         break;
                     default:
                         System.out.println("Digite uma opção válida!");
@@ -65,12 +95,12 @@ public class Main {
                 .append("\n\n--------------------------------- Menu ---------------------------------")
                 .append("\n Escolha uma opção...")
                 .append("\n [0] Sair")
-                .append("\n [1] Folha de Pagamento Mensal (Salário + Benefício) dos Funcionário.")
-                .append("\n [2] Folha de Pagamento Mensal (Somente salário) dos Funcionário.")
-                .append("\n [3] Folha de Pagamento Mensal (Benefícios) dos Funcioários.")
+                .append("\n [1] Folha de Pagamento Mensal (Salário + Benefício) dos Funcionários.")
+                .append("\n [2] Folha de Pagamento Mensal (Somente salário) dos Funcionários.")
+                .append("\n [3] Folha de Pagamento Mensal (Bonificação) dos Funcioários.")
                 .append("\n [4] Verificar Maior Salário Total Mensal.")
-                .append("\n [5] Verificar Maior Beneficiário Mensal.")
-                .append("\n [6] Verificar Maior Vendedor do Mês")
+                .append("\n [5] Verificar Maior Bonificação Mensal.")
+                .append("\n [6] Verificar Maior Vendedor do Mês.")
                 .append("\n Opção: ");
         System.out.print(sb);
     }
@@ -80,29 +110,4 @@ public class Main {
         String continuar = sc.next();
         for (int i = 0; i < 50; ++i) System.out.println();
     }
-
-    public static LocalDate entradaDeData() {
-        System.out.println("Escolha o ano da checagem");
-        String mes = sc.nextLine();
-        System.out.println("Escolha o mes da checagem");
-        String ano = sc.nextLine();
-        sc.nextLine();
-        return  Funcionario.conversorStringLocalDate(mes,ano);
-    }
 }
- /*
-        System.out.println("Olá mundo!");
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        Funcionario f1 = new Secretario("Alex", LocalDate.parse("01/02/2004", dtf));
-        Funcionario f2 = new Vendedor("Joao", LocalDate.parse("01/08/2021", dtf));
-        Funcionario f3 = new Gerente("Maria", LocalDate.parse("01/01/2009", dtf));
-
-        Double a = f1.salarioTotal(LocalDate.parse("01/03/2005", dtf));
-        Double b = f2.salarioTotal(LocalDate.parse("01/01/2025", dtf));
-        Double c = f3.salarioTotal(LocalDate.parse("01/03/2010", dtf));
-
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);*/

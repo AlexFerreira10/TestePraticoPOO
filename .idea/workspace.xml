@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0187b4a3-29c9-42fd-b8c4-131a28e72be1" name="Changes" comment="">
+    <list default="true" id="0187b4a3-29c9-42fd-b8c4-131a28e72be1" name="Changes" comment="Implementei a interface do programa e algumas funções/funcionalidades.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/applications/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Empresa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Funcionario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Gerente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Gerente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Secretario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Secretario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Vendedor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Vendedor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,21 +87,51 @@
       <option name="presentableId" value="Default" />
       <updated>1715978716612</updated>
     </task>
+    <task id="LOCAL-00001" summary="Implementei a interface do programa e algumas funções/funcionalidades.">
+      <option name="closed" value="true" />
+      <created>1716045553480</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716045553480</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implementei a interface do programa e algumas funções/funcionalidades." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementei a interface do programa e algumas funções/funcionalidades." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/applications/Main.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/entities/Funcionario.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/applications/Main.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="5" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/entities/Funcionario.java</url>
+          <line>54</line>
+          <properties class="entities.Funcionario" method="folhaPagamentoSalario">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/entities/Funcionario.java</url>
+          <line>40</line>
+          <properties class="entities.Funcionario" method="folhaPagamentoTotal">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.IllegalFormatConversionException" package="java.util" />
+          <option name="timeStamp" value="10" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

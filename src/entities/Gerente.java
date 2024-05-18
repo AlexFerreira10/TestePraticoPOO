@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Gerente extends Funcionario{
 
-    private static final double SALARIO_FIXO = 20000.00;
-    private static final double SALARIO_VARIAVEL = 3000.00;
+    protected static final double SALARIO_FIXO = 20000.00;
+    protected static final double SALARIO_VARIAVEL = 3000.00;
 
     public Gerente(String nome, LocalDate dataContratacao) {
         super(nome, dataContratacao);
