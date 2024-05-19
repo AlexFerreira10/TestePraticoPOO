@@ -6,6 +6,7 @@ import exceptions.FalhaEntradaDados;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class Main {
@@ -18,12 +19,14 @@ public class Main {
 
         do {
             try {
-                // Lista dos funcionarios que recebem bonificacoes
+                // Lista somente com funcionários que recebem bonificações
                 List<Funcionario> listaRecebemBonificacao = new ArrayList<>(empresa.getQuadroFuncionarios().stream().filter(funcionario -> funcionario instanceof Vendedor || funcionario instanceof Secretario)
                         .toList());
-                // Lista dos Vendedores
-                List<Funcionario> listaVendedores = new ArrayList<>(empresa.getQuadroFuncionarios().stream()
-                        .filter(funcionario -> funcionario instanceof Vendedor).toList());
+                // Lista somente com Vendedores
+                List<Vendedor> listaVendedores = empresa.getQuadroFuncionarios().stream()
+                        .filter(funcionario -> funcionario instanceof Vendedor)
+                        .map(funcionario -> (Vendedor) funcionario)
+                        .collect(Collectors.toList());
 
                 Main.menu();
                 opcao = Integer.parseInt(sc.next());
@@ -99,10 +102,10 @@ public class Main {
                 .append("\n [0] Sair")
                 .append("\n [1] Folha de Pagamento Mensal (Salário + Benefício) dos Funcionários.")
                 .append("\n [2] Folha de Pagamento Mensal (Somente salário) dos Funcionários.")
-                .append("\n [3] Folha de Pagamento Mensal (Bonificação) dos Funcioários.")
+                .append("\n [3] Folha de Pagamento Mensal (Bonificação) dos Funcionários.")
                 .append("\n [4] Verificar Maior Salário Total Mensal.")
                 .append("\n [5] Verificar Maior Bonificação Mensal.")
-                .append("\n [6] Verificar Maior Vendedor do Mês.")
+                .append("\n [6] Verificar Melhor Vendedor do Mês.")
                 .append("\n Opção: ");
         System.out.print(sb);
     }

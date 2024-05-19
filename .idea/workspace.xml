@@ -7,12 +7,7 @@
     <list default="true" id="0187b4a3-29c9-42fd-b8c4-131a28e72be1" name="Changes" comment="Finalizei as funcionalidades">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/applications/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Empresa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Funcionario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Gerente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Gerente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Secretario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Secretario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/VendasComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/VendasComparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Vendedor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Vendedor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,15 +119,6 @@
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="17" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/entities/Funcionario.java</url>
-          <line>227</line>
-          <properties class="entities.Funcionario" method="conversorStringLocalDate">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

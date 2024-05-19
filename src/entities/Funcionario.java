@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Funcionario {
 
@@ -35,16 +36,11 @@ public abstract class Funcionario {
     // Retorna o somatório do salário total(Salário + Bonificação) de todos os funcionários
     public static double folhaPagamentoTotal(List<Funcionario> lista, String mes, String ano) {
 
-        // Evitar inconsistências de dados
-        if(lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
-            throw new FalhaEntradaDados("Entrada de dados inválida");
-        }
+        validarEntradaDados(lista, mes, ano);
 
         LocalDate data = conversorStringLocalDate(mes, ano);
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
-        if(data.isBefore(LocalDate.parse("01/12/2021",dtf)) || LocalDate.parse("01/04/2022",dtf).isBefore(data)) {
-            System.out.println("Aviso: Nesta data não há registro de venda dos Vendedores");
-        }
+        avisoDataForaPeriodoVendas(data);
 
         double soma = lista.stream()
                 .filter(funcionario -> funcionario.getDataContratacao().isBefore(data))
@@ -61,10 +57,7 @@ public abstract class Funcionario {
     // Retorna o somatório do salário parcial(Sem bonificação) de todos os funcionários
     public static double folhaPagamentoSalario(List<Funcionario> lista, String mes, String ano) {
 
-        // Evitar inconsistências de dados
-        if(lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
-            throw new FalhaEntradaDados("Entrada de dados inválida");
-        }
+        validarEntradaDados(lista, mes, ano);
 
         LocalDate data = conversorStringLocalDate(mes, ano);
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
@@ -98,16 +91,11 @@ public abstract class Funcionario {
     // Retorna o somatório da bonificação de todos os funcionarios (gerentes não estão inclusos)
     public static double folhaPagamentoBonificacao(List<Funcionario> lista, String mes, String ano) {
 
-        // Evitar inconsistências de dados
-        if(lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
-            throw new FalhaEntradaDados("Entrada de dados inválida");
-        }
+        validarEntradaDados(lista, mes, ano);
 
         LocalDate data = conversorStringLocalDate(mes, ano);
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
-        if(data.isBefore(LocalDate.parse("01/12/2021",dtf)) || LocalDate.parse("01/04/2022",dtf).isBefore(data)) {
-            System.out.println("Aviso: Nesta data não há registro de venda dos Vendedores");
-        }
+        avisoDataForaPeriodoVendas(data);
 
         // Acumula o somatório dos benefícios
         double soma = 0.0;
@@ -133,24 +121,15 @@ public abstract class Funcionario {
 
     // Retorna o vendedor com o maior salário total (salário + bonificação)
     public static Funcionario maiorPagamentoTotal(List<Funcionario> lista, String mes, String ano) {
-        // Evitar inconsistências de dados
-        if(lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
-            throw new FalhaEntradaDados("Entrada de dados inválida");
-        }
+
+        validarEntradaDados(lista, mes, ano);
 
         LocalDate data = conversorStringLocalDate(mes, ano);
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
-        if(data.isBefore(LocalDate.parse("01/12/2021",dtf)) || LocalDate.parse("01/04/2022",dtf).isBefore(data)) {
-            System.out.println("Aviso: Nesta data não há registro de venda dos Vendedores");
-        }
+        avisoDataForaPeriodoVendas(data);
 
         // Filtrar os funcionários contratados até a data especificada
-        List<Funcionario> funcionariosContratadosAteData = new ArrayList<>();
-        for(Funcionario funcionario : lista) {
-            if(funcionario.dataContratacao.isBefore(data) || funcionario.dataContratacao.isEqual(data)) {
-                funcionariosContratadosAteData.add(funcionario);
-            }
-        }
+        List<Funcionario> funcionariosContratadosAteData = filtrarFuncionariosContratados(lista, data);
 
         if(funcionariosContratadosAteData.isEmpty()) {
             throw new FalhaEntradaDados("Não há funcionários contratados até a data especificada");
@@ -165,24 +144,16 @@ public abstract class Funcionario {
 
     // Retorna o nome da funcionaria com maior bonificação (os gerentes não estão inclusos na listagem)
     public static String maiorBonificao(List<Funcionario> lista, String mes, String ano) {
+
         // Evitar inconsistências de dados
-        if(lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
-            throw new FalhaEntradaDados("Entrada de dados inválida");
-        }
+        validarEntradaDados(lista, mes, ano);
 
         LocalDate data = conversorStringLocalDate(mes, ano);
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
-        if(data.isBefore(LocalDate.parse("01/12/2021",dtf)) || LocalDate.parse("01/04/2022",dtf).isBefore(data)) {
-            System.out.println("Aviso: Nesta data não há registro de venda dos Vendedores");
-        }
+        avisoDataForaPeriodoVendas(data);
 
         // Filtrar os funcionários contratados até a data especificada
-        List<Funcionario> funcionariosContratadosAteData = new ArrayList<>();
-        for(Funcionario funcionario : lista) {
-            if(funcionario.dataContratacao.isBefore(data) || funcionario.dataContratacao.isEqual(data)) {
-                funcionariosContratadosAteData.add(funcionario);
-            }
-        }
+        List<Funcionario> funcionariosContratadosAteData = filtrarFuncionariosContratados(lista, data);
 
         if(funcionariosContratadosAteData.isEmpty()) {
             throw new FalhaEntradaDados("Não há funcionários contratados até a data especificada");
@@ -194,32 +165,35 @@ public abstract class Funcionario {
         return funcionariosContratadosAteData.get(0).getNome();
     }
 
-    public static Funcionario melhorVendedor(List<Funcionario> lista, String mes, String ano) {
-        // Evitar inconsistências de dados
-        if(lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
-            throw new FalhaEntradaDados("Entrada de dados inválida");
-        }
+    public static Funcionario melhorVendedor(List<Vendedor> lista, String mes, String ano) {
+
+        validarEntradaDados(lista, mes, ano);
 
         LocalDate data = conversorStringLocalDate(mes, ano);
+
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
-        if(data.isBefore(LocalDate.parse("01/12/2021",dtf)) || LocalDate.parse("01/04/2022",dtf).isBefore(data)) {
-            System.out.println("Aviso: Nesta data não há registro de venda dos Vendedores");
-        }
+        avisoDataForaPeriodoVendas(data);
 
         // Filtrar os funcionários contratados até a data especificada
-        List<Funcionario> funcionariosContratadosAteData = new ArrayList<>();
-        for(Funcionario funcionario : lista) {
-            if(funcionario.dataContratacao.isBefore(data) || funcionario.dataContratacao.isEqual(data)) {
-                funcionariosContratadosAteData.add(funcionario);
+        List<Vendedor> funcionariosContratadosAteData = new ArrayList<>();
+        for(Vendedor vendedor : lista) {
+            if(vendedor.dataContratacao.isBefore(data) || vendedor.dataContratacao.isEqual(data)) {
+                funcionariosContratadosAteData.add(vendedor);
             }
         }
 
+        // Vendedores não contrados
         if(funcionariosContratadosAteData.isEmpty()) {
             throw new FalhaEntradaDados("Não há funcionários contratados até a data especificada");
         }
 
         Comparator<Funcionario> comparator = new VendasComparator(mes, ano);
         funcionariosContratadosAteData.sort(comparator.reversed());
+
+        // Vendedores sem registro de vendas
+        if(funcionariosContratadosAteData.get(0).relatorioVendasPorMes.get(data) == null) {
+            throw new FalhaEntradaDados("Não há registro de vendas na data especificada");
+        }
 
         return funcionariosContratadosAteData.get(0);
     }
@@ -229,10 +203,38 @@ public abstract class Funcionario {
         String dataString = "01/" + mes + "/" + ano;
 
         if (Integer.parseInt(mes) < 1 || Integer.parseInt(mes)  > 12) {
-            throw new IllegalArgumentException("O mês fornecido não é válido: ");
+            throw new IllegalArgumentException("O mês fornecido não é válido! ");
+        }
+
+        // Como o exercício não especifíca, escolhi para deixar o exercício mais real
+        if (Integer.parseInt(ano) < 2000 || Integer.parseInt(ano) > 2024) {
+            throw new IllegalArgumentException("O ano fornecido não é válido! ");
         }
 
         return  LocalDate.parse(dataString, dtf);
+    }
+
+    // Verifica se as informações passadas são válidas
+    private static void validarEntradaDados(List<?> lista, String mes, String ano) {
+        if (lista == null || mes == null || ano == null || mes.length() != 2 || ano.length() != 4) {
+            throw new FalhaEntradaDados("Entrada de dados inválida");
+        }
+    }
+
+    // Retorna uma lista só com os funcionários contratados até a data fornecida
+    private static List<Funcionario> filtrarFuncionariosContratados(List<Funcionario> lista, LocalDate data) {
+        return lista.stream()
+                .filter(funcionario -> funcionario.dataContratacao.isBefore(data) || funcionario.dataContratacao.isEqual(data))
+                .collect(Collectors.toList());
+    }
+
+    // Deixa um aviso caso a data fornecida esteja fora do relatório de vendas passada na questão
+    private static void avisoDataForaPeriodoVendas(LocalDate data) {
+        LocalDate dataMinima = LocalDate.parse("01/12/2021", dtf);
+        LocalDate dataMaxima = LocalDate.parse("01/04/2022", dtf);
+        if (data.isBefore(dataMinima) || dataMaxima.isBefore(data)) {
+            System.out.println("Aviso: Nesta data não há registro de venda dos Vendedores");
+        }
     }
 
     @Override
