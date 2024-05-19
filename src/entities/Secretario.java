@@ -25,14 +25,13 @@ public class Secretario extends Funcionario {
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
 
         // Funcionario precisa ter sido contratado antes da dataSalario
-        if(anosTrabalhados > 0) {
+        if(anosTrabalhados >= 0) {
             double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
             return salarioBase + calculadorBonificacao(dataSalario);
         }
         else {
             return 0.0;
         }
-
     }
 
     public double calculadorBonificacao(LocalDate dataSalario) {
@@ -43,9 +42,9 @@ public class Secretario extends Funcionario {
 
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
         // Funcionario precisa ter sido contratado antes da dataSalario
-        if(anosTrabalhados > 0) {
+        if(anosTrabalhados >= 0) {
             double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
-            return BONIFICACAO * (SALARIO_FIXO + SALARIO_VARIAVEL * (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario) * BONIFICACAO);
+            return BONIFICACAO * salarioBase;
         }
         else {
             return 0.0;

@@ -68,24 +68,25 @@ public abstract class Funcionario {
         // Acumula o somatório dos salarios
         double soma = 0.0;
 
-        for(Funcionario funcionario: lista) {
+        for(Funcionario funcionario : lista) {
             int anosTrabalhados = (int) ChronoUnit.YEARS.between(funcionario.dataContratacao, conversorStringLocalDate(mes, ano));
-            //Necessário fazer essa diferenciação pois cada cargo tem suas remunerações singulares
-            if(funcionario instanceof Vendedor) {
-                soma += Vendedor.SALARIO_FIXO + Vendedor.SALARIO_VARIAVEL * anosTrabalhados;
+            if(anosTrabalhados >= 0) {
+                //Necessário fazer essa diferenciação pois cada cargo tem suas remunerações singulares
+                if(funcionario instanceof Vendedor) {
+                    soma += Vendedor.SALARIO_FIXO + Vendedor.SALARIO_VARIAVEL * anosTrabalhados;
+                }
+                if(funcionario instanceof Secretario) {
+                    soma += Secretario.SALARIO_FIXO + Secretario.SALARIO_VARIAVEL * anosTrabalhados;
+                }
+                if(funcionario instanceof Gerente) {
+                    soma += Gerente.SALARIO_FIXO + Gerente.SALARIO_VARIAVEL * anosTrabalhados;
+                }
             }
-            if(funcionario instanceof Secretario) {
-                soma += Secretario.SALARIO_FIXO + Secretario.SALARIO_VARIAVEL * anosTrabalhados;
-            }
-            if(funcionario instanceof Gerente) {
-                soma += Gerente.SALARIO_FIXO + Gerente.SALARIO_VARIAVEL * anosTrabalhados;
+            else {
+                soma = 0.0;
             }
         }
-        if(soma < 0) {
-            return 0.0;
-        } else {
-            return soma;
-        }
+        return soma;
     }
 
     // Retorna o somatório da bonificação de todos os funcionarios (gerentes não estão inclusos)
@@ -100,23 +101,23 @@ public abstract class Funcionario {
         // Acumula o somatório dos benefícios
         double soma = 0.0;
 
-        for(Funcionario funcionario: lista) {
+        for(Funcionario funcionario : lista) {
             int anosTrabalhados = (int) ChronoUnit.YEARS.between(funcionario.dataContratacao, conversorStringLocalDate(mes, ano));
-            // Não há gerentes pois eles foram filtrados antes de serem passados como argumento
-            if(funcionario instanceof Vendedor) {
-                soma += Vendedor.BONIFICACAO * ((Vendedor) funcionario).relatorioVendasPorMes.getOrDefault(data, 0.0);
+            if(anosTrabalhados >= 0) {
+              //Não há gerentes pois eles foram filtrados antes de serem passados como argumento
+                if(funcionario instanceof Vendedor) {
+                    soma += Vendedor.BONIFICACAO * ((Vendedor) funcionario).relatorioVendasPorMes.getOrDefault(data, 0.0);
+                }
+                if(funcionario instanceof Secretario) {
+                    double salario = Secretario.SALARIO_FIXO + Secretario.SALARIO_VARIAVEL * anosTrabalhados;
+                    soma += Secretario.BONIFICACAO * salario;
+                }
             }
-            if(funcionario instanceof Secretario) {
-                double salario = Gerente.SALARIO_FIXO + Gerente.SALARIO_VARIAVEL * anosTrabalhados;
-                soma += Secretario.BONIFICACAO * salario;
+            else {
+                soma = 0.0;
             }
         }
-
-        if(soma < 0) {
-            return 0.0;
-        } else {
-            return soma;
-        }
+        return soma;
     }
 
     // Retorna o vendedor com o maior salário total (salário + bonificação)
@@ -143,7 +144,7 @@ public abstract class Funcionario {
     }
 
     // Retorna o nome da funcionaria com maior bonificação (os gerentes não estão inclusos na listagem)
-    public static String maiorBonificao(List<Funcionario> lista, String mes, String ano) {
+    public static String maiorBonificacao(List<Funcionario> lista, String mes, String ano) {
 
         // Evitar inconsistências de dados
         validarEntradaDados(lista, mes, ano);
@@ -152,14 +153,15 @@ public abstract class Funcionario {
         // Aviso para caso a data escolhida não esteja no relátorio de vendas fornecido pela questão
         avisoDataForaPeriodoVendas(data);
 
-        // Filtrar os funcionários contratados até a data especificada
+        // Filtra os funcionários contratados até a data especificada
         List<Funcionario> funcionariosContratadosAteData = filtrarFuncionariosContratados(lista, data);
 
         if(funcionariosContratadosAteData.isEmpty()) {
             throw new FalhaEntradaDados("Não há funcionários contratados até a data especificada");
         }
 
-        Comparator<Funcionario> comparator = new SalarioComparator(mes, ano);
+        // Ordeno a lista de forma em que o funcionário com a maior bonificação seja o primeiro
+        Comparator<Funcionario> comparator = new BonificacaoComparator(mes, ano);
         funcionariosContratadosAteData.sort(comparator.reversed());
 
         return funcionariosContratadosAteData.get(0).getNome();
@@ -187,6 +189,7 @@ public abstract class Funcionario {
             throw new FalhaEntradaDados("Não há funcionários contratados até a data especificada");
         }
 
+        // Ordeno a lista de forma em que o funcionário com a maior venda  seja o primeiro
         Comparator<Funcionario> comparator = new VendasComparator(mes, ano);
         funcionariosContratadosAteData.sort(comparator.reversed());
 

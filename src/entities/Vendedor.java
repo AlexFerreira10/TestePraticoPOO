@@ -26,7 +26,6 @@ public class Vendedor extends Funcionario{
 
     @Override
     public double salarioTotal(LocalDate dataSalario) {
-
         if(dataSalario == null) {
             throw new FalhaEntradaDados("Data de pesquisa invalida! ");
         }
@@ -34,9 +33,8 @@ public class Vendedor extends Funcionario{
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
 
         // Funcionario precisa ter sido contratado antes da dataSalario
-        if(anosTrabalhados > 0) {
+        if(anosTrabalhados >= 0) {
             double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
-
             // Caso nao tenha o mes de vendas registrado, consideramos somente o salario base
             return salarioBase + calculadorBonificacao(dataSalario);
         }
@@ -46,14 +44,13 @@ public class Vendedor extends Funcionario{
     }
 
     public double calculadorBonificacao(LocalDate dataSalario) {
-
         if(dataSalario == null) {
             throw new FalhaEntradaDados("Data de pesquisa invalida! ");
         }
 
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
         // Funcionario precisa ter sido contratado antes da dataSalario
-        if(anosTrabalhados > 0) {
+        if(anosTrabalhados >= 0) {
             // Considero 0.0 os meses que não possuem vendas registradas
             return BONIFICACAO * relatorioVendasPorMes.getOrDefault(dataSalario, 0.0);
         }

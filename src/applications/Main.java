@@ -41,7 +41,7 @@ public class Main {
                         System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
                         String mes = sc.next();
                         double valorTotal = Funcionario.folhaPagamentoTotal(empresa.getQuadroFuncionarios(), mes, ano);
-                        System.out.println("Folha de Pagamento Mensal (Salário + Benefício) dos Funcionários: R$" + String.format("%.2f", valorTotal));
+                        System.out.println("Folha de Pagamento Mensal (Salário + Bonificação) dos Funcionários: R$" + String.format("%.2f", valorTotal));
                         break;
                     case 2:
                         System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
@@ -71,7 +71,7 @@ public class Main {
                         ano = sc.next();
                         System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
                         mes = sc.next();
-                        System.out.println("Maior Bonificação do Mês: " + Funcionario.maiorBonificao(listaRecebemBonificacao, mes, ano));
+                        System.out.println("Maior Bonificação do Mês: " + Funcionario.maiorBonificacao(listaRecebemBonificacao, mes, ano));
                         break;
                     case 6:
                         System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
@@ -100,7 +100,7 @@ public class Main {
                 .append("\n\n--------------------------------- Menu ---------------------------------")
                 .append("\n Escolha uma opção...")
                 .append("\n [0] Sair")
-                .append("\n [1] Folha de Pagamento Mensal (Salário + Benefício) dos Funcionários.")
+                .append("\n [1] Folha de Pagamento Mensal (Salário + Bonificação) dos Funcionários.")
                 .append("\n [2] Folha de Pagamento Mensal (Somente salário) dos Funcionários.")
                 .append("\n [3] Folha de Pagamento Mensal (Bonificação) dos Funcionários.")
                 .append("\n [4] Verificar Maior Salário Total Mensal.")

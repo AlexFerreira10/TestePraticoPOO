@@ -24,7 +24,7 @@ public class Gerente extends Funcionario{
 
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
         // Funcionario precisa ter sido contratado antes da dataSalario
-        if(anosTrabalhados > 0) {
+        if(anosTrabalhados >= 0) {
             return SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
         }
         else {
