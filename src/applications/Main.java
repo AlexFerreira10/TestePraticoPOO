@@ -19,7 +19,7 @@ public class Main {
         do {
             try {
                 // Lista dos funcionarios que recebem bonificacoes
-                List<Funcionario> lista = new ArrayList<>(empresa.getQuadroFuncionarios().stream().filter(funcionario -> funcionario instanceof Vendedor || funcionario instanceof Secretario)
+                List<Funcionario> listaRecebemBonificacao = new ArrayList<>(empresa.getQuadroFuncionarios().stream().filter(funcionario -> funcionario instanceof Vendedor || funcionario instanceof Secretario)
                         .toList());
                 // Lista dos Vendedores
                 List<Funcionario> listaVendedores = new ArrayList<>(empresa.getQuadroFuncionarios().stream()
@@ -53,7 +53,7 @@ public class Main {
                         ano = sc.next();
                         System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
                         mes = sc.next();
-                        valorTotal = Funcionario.folhaPagamentoBonificacao(lista, mes, ano);
+                        valorTotal = Funcionario.folhaPagamentoBonificacao(listaRecebemBonificacao, mes, ano);
                         System.out.println("Folha de Pagamento Mensal (Bonificação) dos Funcionários: R$" + String.format("%.2f", valorTotal));
                         break;
                     case 4:
@@ -68,14 +68,14 @@ public class Main {
                         ano = sc.next();
                         System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
                         mes = sc.next();
-                        System.out.println("Maior Bonificação do Mês: " + Funcionario.maiorPagamentoBonificao(lista, mes, ano));
+                        System.out.println("Maior Bonificação do Mês: " + Funcionario.maiorBonificao(listaRecebemBonificacao, mes, ano));
                         break;
                     case 6:
                         System.out.print("\nEscolha o ano da checagem (Padrão 4 dígitos): ");
                         ano = sc.next();
                         System.out.print("Escolha o mês da checagem (Padrão 2 dígitos): ");
                         mes = sc.next();
-                        System.out.println("Maior Vendedor do Mês: " + Funcionario.maiorVendedor(listaVendedores, mes, ano));
+                        System.out.println("Maior Vendedor do Mês: " + Funcionario.melhorVendedor(listaVendedores, mes, ano));
                         break;
                     default:
                         System.out.println("Digite uma opção válida!");
@@ -83,6 +83,8 @@ public class Main {
             } catch (FalhaEntradaDados e) {
                 System.out.println("Erro: " + e.getMessage());
             } catch (NumberFormatException e) {
+                System.out.println("Erro: " + e.getMessage());
+            } catch (IllegalArgumentException e) {
                 System.out.println("Erro: " + e.getMessage());
             }
             Main.limparConsole();

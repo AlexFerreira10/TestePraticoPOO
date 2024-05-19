@@ -1,9 +1,9 @@
 package entities;
 
+import exceptions.FalhaEntradaDados;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Gerente extends Funcionario{
 
@@ -17,8 +17,18 @@ public class Gerente extends Funcionario{
     // Não possui bonificação
     @Override
     public double salarioTotal(LocalDate dataSalario) {
+
+        if(dataSalario == null) {
+            throw new FalhaEntradaDados("Data de pesquisa invalida! ");
+        }
+
         int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
-        double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
-        return salarioBase;
+        // Funcionario precisa ter sido contratado antes da dataSalario
+        if(anosTrabalhados > 0) {
+            return SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
+        }
+        else {
+            return 0.0;
+        }
     }
 }

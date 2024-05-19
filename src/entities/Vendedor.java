@@ -13,6 +13,7 @@ public class Vendedor extends Funcionario{
     protected static final double SALARIO_VARIAVEL = 1000.00;
     protected static final double BONIFICACAO = 0.3;
 
+    // Map com a vendas por mes
     protected Map<LocalDate,Double> relatorioVendasPorMes = new HashMap<>();
 
     public Vendedor(String nome, LocalDate dataContratacao) {
@@ -25,17 +26,39 @@ public class Vendedor extends Funcionario{
 
     @Override
     public double salarioTotal(LocalDate dataSalario) {
+
         if(dataSalario == null) {
             throw new FalhaEntradaDados("Data de pesquisa invalida! ");
         }
-        int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
-        double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
 
-        // Caso nao tenha o mes de vdendas registrado, consideramos 0
-        return salarioBase + calculadorBonificacao(dataSalario);
+        int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
+
+        // Funcionario precisa ter sido contratado antes da dataSalario
+        if(anosTrabalhados > 0) {
+            double salarioBase = SALARIO_FIXO + SALARIO_VARIAVEL * anosTrabalhados;
+
+            // Caso nao tenha o mes de vendas registrado, consideramos somente o salario base
+            return salarioBase + calculadorBonificacao(dataSalario);
+        }
+        else {
+            return 0.0;
+        }
     }
 
     public double calculadorBonificacao(LocalDate dataSalario) {
-        return BONIFICACAO * relatorioVendasPorMes.getOrDefault(dataSalario, 0.0);
+
+        if(dataSalario == null) {
+            throw new FalhaEntradaDados("Data de pesquisa invalida! ");
+        }
+
+        int anosTrabalhados = (int) ChronoUnit.YEARS.between(dataContratacao, dataSalario);
+        // Funcionario precisa ter sido contratado antes da dataSalario
+        if(anosTrabalhados > 0) {
+            // Considero 0.0 os meses que não possuem vendas registradas
+            return BONIFICACAO * relatorioVendasPorMes.getOrDefault(dataSalario, 0.0);
+        }
+        else {
+            return 0.0;
+        }
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Empresa {
 
-    static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     protected List<Funcionario> quadroFuncionarios = new ArrayList<>();
 
