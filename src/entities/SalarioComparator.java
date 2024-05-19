@@ -2,7 +2,6 @@ package entities;
 
 import java.util.Comparator;
 
-
 public class SalarioComparator implements Comparator<Funcionario> {
 
     private String mes;

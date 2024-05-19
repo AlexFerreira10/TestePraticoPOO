@@ -47,11 +47,7 @@ public abstract class Funcionario {
                 .mapToDouble(funcionario -> funcionario.salarioTotal(data))
                 .sum();
 
-        if(soma < 0) {
-            return 0.0;
-        } else {
-            return soma;
-        }
+        return soma;
     }
 
     // Retorna o somatório do salário parcial(Sem bonificação) de todos os funcionários
@@ -70,6 +66,7 @@ public abstract class Funcionario {
 
         for(Funcionario funcionario : lista) {
             int anosTrabalhados = (int) ChronoUnit.YEARS.between(funcionario.dataContratacao, conversorStringLocalDate(mes, ano));
+
             if(anosTrabalhados >= 0) {
                 //Necessário fazer essa diferenciação pois cada cargo tem suas remunerações singulares
                 if(funcionario instanceof Vendedor) {
@@ -120,7 +117,7 @@ public abstract class Funcionario {
         return soma;
     }
 
-    // Retorna o vendedor com o maior salário total (salário + bonificação)
+    // Retorna o funcionário com o maior salário total (salário + bonificação)
     public static Funcionario maiorPagamentoTotal(List<Funcionario> lista, String mes, String ano) {
 
         validarEntradaDados(lista, mes, ano);
@@ -143,7 +140,7 @@ public abstract class Funcionario {
         return funcionariosContratadosAteData.get(0);
     }
 
-    // Retorna o nome da funcionaria com maior bonificação (os gerentes não estão inclusos na listagem)
+    // Retorna o nome do funcionario com maior bonificação (os gerentes não estão inclusos na listagem)
     public static String maiorBonificacao(List<Funcionario> lista, String mes, String ano) {
 
         // Evitar inconsistências de dados
@@ -167,6 +164,7 @@ public abstract class Funcionario {
         return funcionariosContratadosAteData.get(0).getNome();
     }
 
+    // Retorna o vendedor com maior venda
     public static Funcionario melhorVendedor(List<Vendedor> lista, String mes, String ano) {
 
         validarEntradaDados(lista, mes, ano);

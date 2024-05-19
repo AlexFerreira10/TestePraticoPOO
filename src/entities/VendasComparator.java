@@ -23,4 +23,3 @@ public class VendasComparator implements Comparator<Funcionario> {
         return Double.compare(vendedor1, vendedor2);
     }
 }
-
