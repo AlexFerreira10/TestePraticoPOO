@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0187b4a3-29c9-42fd-b8c4-131a28e72be1" name="Changes" comment="Correção de bugs.">
+    <list default="true" id="0187b4a3-29c9-42fd-b8c4-131a28e72be1" name="Changes" comment="Melhorando código.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Funcionario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/SalarioComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/SalarioComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/VendasComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/VendasComparator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716146474629</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Melhorando código.">
+      <option name="closed" value="true" />
+      <created>1716154499518</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716154499518</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -124,7 +133,8 @@
     <MESSAGE value="Finalizei as funcionalidades" />
     <MESSAGE value="Otimização de código." />
     <MESSAGE value="Correção de bugs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Correção de bugs." />
+    <MESSAGE value="Melhorando código." />
+    <option name="LAST_COMMIT_MESSAGE" value="Melhorando código." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -138,11 +148,6 @@
           <option name="timeStamp" value="17" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/out/production/TestePratico/entities/VendasComparator.class</url>
-          <line>1</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/entities/Funcionario.java</url>
           <line>203</line>
           <option name="timeStamp" value="30" />
@@ -151,6 +156,11 @@
           <url>file://$PROJECT_DIR$/src/applications/Main.java</url>
           <line>11</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/entities/Funcionario.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
